@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Manga Livre</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .header-animate {
+            animation: fadeInDown 0.8s ease forwards;
+        }
+
+        .form-animate {
+            animation: slideInRight 0.8s ease forwards;
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        .decoration-animate {
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 0.4s;
+            opacity: 0;
+        }
+
+        .input-focus {
+            transition: all 0.3s ease;
+        }
+
+        .input-focus:focus {
+            border-color: #ff6b00;
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+        }
+
+        .button-shine {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button-shine::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .button-shine:hover::before {
+            left: 100%;
+        }
+
+        .password-strength {
+            height: 4px;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            background-color: #4b5563;
+        }
+
+        .password-strength.weak {
+            background-color: #ef4444;
+            width: 33%;
+        }
+
+        .password-strength.medium {
+            background-color: #f59e0b;
+            width: 66%;
+        }
+
+        .password-strength.strong {
+            background-color: #10b981;
+            width: 100%;
+        }
+
+        .step-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #9ca3af;
+            font-size: 0.875rem;
+        }
+
+        .step.active {
+            color: #ff6b00;
+        }
+
+        .step-dot {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #374151;
+            font-weight: 600;
+        }
+
+        .step.active .step-dot {
+            background-color: #ff6b00;
+            color: #000;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="sticky top-0 z-30 bg-gradient-to-b from-slate-950 to-slate-900 border-b-2 border-orange-500 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between py-4">
+                <!-- Logo -->
+                <a href="/" class="text-2xl md:text-3xl font-bold text-orange-500 hover:text-orange-400 transition-colors duration-200 flex items-center gap-2">
+                    📚 Manga Livre
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center gap-6">
+                    <a href="/" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">Início</a>
+                    <span class="text-gray-500">|</span>
+                    <span class="text-gray-400">Cadastro</span>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-10">
+        <div class="w-full max-w-7xl">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-start">
+                <!-- Left Side - Info -->
+                <div class="hidden md:flex flex-col justify-center decoration-animate">
+                    <div class="space-y-6">
+                        <div>
+                            <h2 class="text-4xl lg:text-5xl font-bold text-orange-500 mb-4">Junte-se a nós!</h2>
+                            <p class="text-xl text-gray-300">Crie sua conta e comece a explorar um mundo infinito de mangás</p>
+                        </div>
+
+                        <!-- Benefits -->
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0">
+                                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500/10 border border-orange-500/20">
+                                        <svg class="h-6 w-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-white">Acesso Completo</h3>
+                                    <p class="text-gray-400">Leia mangás em qualquer lugar e hora</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0">
+                                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500/10 border border-orange-500/20">
+                                        <svg class="h-6 w-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-white">Biblioteca Pessoal</h3>
+                                    <p class="text-gray-400">Salve seus mangás favoritos</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0">
+                                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500/10 border border-orange-500/20">
+                                        <svg class="h-6 w-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-white">Comunidade Global</h3>
+                                    <p class="text-gray-400">Compartilhe suas opiniões com outros fãs</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0">
+                                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500/10 border border-orange-500/20">
+                                        <svg class="h-6 w-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-white">Notificações</h3>
+                                    <p class="text-gray-400">Receba alertas de novos capítulos</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stats -->
+                        <div class="grid grid-cols-2 gap-4 pt-6 border-t border-slate-700">
+                            <div class="text-center">
+                                <p class="text-3xl font-bold text-orange-500">10K+</p>
+                                <p class="text-gray-400 text-sm">Mangás Disponíveis</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-3xl font-bold text-orange-500">50K+</p>
+                                <p class="text-gray-400 text-sm">Usuários Ativos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side - Register Form -->
+                <div class="form-animate">
+                    <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 lg:p-10 border border-orange-500/20 shadow-2xl">
+                        <h1 class="header-animate text-3xl font-bold text-white mb-2">Criar Conta</h1>
+                        <p class="header-animate text-gray-400 mb-8">Preencha os dados abaixo para se registrar</p>
+
+                        <form class="space-y-5">
+                            <!-- Full Name Field -->
+                            <div>
+                                <label for="fullname" class="block text-sm font-medium text-gray-300 mb-2">
+                                    Nome Completo
+                                </label>
+                                <input
+                                    type="text"
+                                    id="fullname"
+                                    placeholder="Seu nome completo"
+                                    class="input-focus w-full px-4 py-3 bg-white/5 border border-slate-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20"
+                                    required
+                                >
+                            </div>
+
+                            <!-- Email Field -->
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-300 mb-2">
+                                    Email
+                                </label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    placeholder="seu.email@exemplo.com"
+                                    class="input-focus w-full px-4 py-3 bg-white/5 border border-slate-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20"
+                                    required
+                                >
+                            </div>
+
+                            <!-- Password Field -->
+                            <div>
+                                <label for="password" class="block text-sm font-medium text-gray-300 mb-2">
+                                    Senha
+                                </label>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    placeholder="••••••••"
+                                    class="input-focus w-full px-4 py-3 bg-white/5 border border-slate-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20"
+                                    required
+                                >
+                                <div class="mt-2">
+                                    <div class="password-strength" id="passwordStrength"></div>
+                                </div>
+                                <p class="text-xs text-gray-400 mt-2">
+                                    Mínimo 8 caracteres, com letras e números
+                                </p>
+                            </div>
+
+                            <!-- Confirm Password Field -->
+                            <div>
+                                <label for="confirm-password" class="block text-sm font-medium text-gray-300 mb-2">
+                                    Confirmar Senha
+                                </label>
+                                <input
+                                    type="password"
+                                    id="confirm-password"
+                                    placeholder="••••••••"
+                                    class="input-focus w-full px-4 py-3 bg-white/5 border border-slate-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20"
+                                    required
+                                >
+                            </div>
+
+                            <!-- Birthday Field -->
+                            <div>
+                                <label for="birthday" class="block text-sm font-medium text-gray-300 mb-2">
+                                    Data de Nascimento
+                                </label>
+                                <input
+                                    type="date"
+                                    id="birthday"
+                                    class="input-focus w-full px-4 py-3 bg-white/5 border border-slate-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20"
+                                    required
+                                >
+                            </div>
+
+                            <!-- Terms Checkbox -->
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-2">
+                                    <input
+                                        type="checkbox"
+                                        id="terms"
+                                        class="w-4 h-4 mt-1 rounded bg-white/5 border border-slate-600 checked:bg-orange-500 checked:border-orange-500 cursor-pointer"
+                                        required
+                                    >
+                                    <label for="terms" class="text-sm text-gray-400 cursor-pointer">
+                                        Concordo com os
+                                        <a href="#" class="text-orange-500 hover:text-orange-400 transition-colors duration-200">Termos de Serviço</a>
+                                        e
+                                        <a href="#" class="text-orange-500 hover:text-orange-400 transition-colors duration-200">Política de Privacidade</a>
+                                    </label>
+                                </div>
+
+                                <div class="flex items-start gap-2">
+                                    <input
+                                        type="checkbox"
+                                        id="newsletter"
+                                        class="w-4 h-4 mt-1 rounded bg-white/5 border border-slate-600 checked:bg-orange-500 checked:border-orange-500 cursor-pointer"
+                                    >
+                                    <label for="newsletter" class="text-sm text-gray-400 cursor-pointer">
+                                        Desejo receber notificações sobre novos mangás e atualizações
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Register Button -->
+                            <button
+                                type="submit"
+                                class="button-shine w-full py-3 px-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-orange-500/50 mt-6"
+                            >
+                                Criar Conta
+                            </button>
+                        </form>
+
+                        <!-- Login Link -->
+                        <div class="mt-8 text-center border-t border-slate-600 pt-6">
+                            <p class="text-gray-400">Já tem uma conta?
+                                <a href="/login" class="text-orange-500 hover:text-orange-400 font-semibold transition-colors duration-200">
+                                    Faça login aqui
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-b from-slate-900 to-slate-950 border-t-2 border-orange-500 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center text-gray-400">
+                <p class="mb-2">&copy; 2024 Manga Livre - Todos os direitos reservados</p>
+                <p>Uma plataforma dedicada aos amantes de mangás</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Password strength indicator
+        const passwordInput = document.getElementById('password');
+        const passwordStrength = document.getElementById('passwordStrength');
+
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            let strength = '';
+
+            if (password.length < 8) {
+                strength = '';
+                passwordStrength.className = 'password-strength';
+            } else if (password.length < 12 || !/[0-9]/.test(password)) {
+                strength = 'medium';
+                passwordStrength.className = 'password-strength medium';
+            } else {
+                strength = 'strong';
+                passwordStrength.className = 'password-strength strong';
+            }
+        });
+
+        // Form validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const terms = document.getElementById('terms').checked;
+
+            // Validations
+            if (password.length < 8) {
+                alert('A senha deve ter no mínimo 8 caracteres');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert('As senhas não correspondem');
+                return;
+            }
+
+            if (!terms) {
+                alert('Você precisa aceitar os termos de serviço');
+                return;
+            }
+
+            // Add animation to button
+            const button = this.querySelector('button[type="submit"]');
+            button.style.opacity = '0.7';
+
+            setTimeout(() => {
+                button.style.opacity = '1';
+                // Aqui você faria a requisição real para o servidor
+                console.log('Registro realizado!');
+            }, 500);
+        });
+
+        // Input animation
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.closest('div').classList.add('scale-105');
+            });
+
+            input.addEventListener('blur', function() {
+                this.closest('div').classList.remove('scale-105');
+            });
+        });
+
+        // Birthday date validation
+        const birthdayInput = document.getElementById('birthday');
+        birthdayInput.addEventListener('change', function() {
+            const birthDate = new Date(this.value);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            if (age < 13) {
+                alert('Você deve ter pelo menos 13 anos para se registrar');
+                this.value = '';
+            }
+        });
+    </script>
+</body>
+</html>

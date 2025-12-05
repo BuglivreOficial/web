@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Manga Livre</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .header-animate {
+            animation: fadeInDown 0.8s ease forwards;
+        }
+
+        .form-animate {
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        .decoration-animate {
+            animation: slideInLeft 0.8s ease forwards;
+            animation-delay: 0.4s;
+            opacity: 0;
+        }
+
+        .input-focus {
+            transition: all 0.3s ease;
+        }
+
+        .input-focus:focus {
+            border-color: #ff6b00;
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+        }
+
+        .button-shine {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button-shine::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .button-shine:hover::before {
+            left: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="sticky top-0 z-30 bg-gradient-to-b from-slate-950 to-slate-900 border-b-2 border-orange-500 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between py-4">
+                <!-- Logo -->
+                <a href="/" class="text-2xl md:text-3xl font-bold text-orange-500 hover:text-orange-400 transition-colors duration-200 flex items-center gap-2">
+                    📚 Manga Livre
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center gap-6">
+                    <a href="/" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">Início</a>
+                    <span class="text-gray-500">|</span>
+                    <span class="text-gray-400">Login</span>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-10">
+        <div class="w-full max-w-7xl">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <!-- Left Side - Decorative -->
+                <div class="hidden md:flex flex-col justify-center decoration-animate">
+                    <div class="space-y-6">
+                        <div>
+                            <h2 class="text-4xl lg:text-5xl font-bold text-orange-500 mb-4">Bem-vindo de volta!</h2>
+                            <p class="text-xl text-gray-300">Acesse sua conta para continuar lendo seus mangás favoritos</p>
+                        </div>
+
+                        <!-- Decorative Cards -->
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4 p-4 rounded-lg bg-white/5 border border-orange-500/20 hover:border-orange-500/50 transition-colors duration-300">
+                                <span class="text-3xl">📚</span>
+                                <div>
+                                    <h3 class="font-semibold text-white">Vasta Biblioteca</h3>
+                                    <p class="text-sm text-gray-400">Milhares de mangás disponíveis</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-4 p-4 rounded-lg bg-white/5 border border-orange-500/20 hover:border-orange-500/50 transition-colors duration-300">
+                                <span class="text-3xl">⭐</span>
+                                <div>
+                                    <h3 class="font-semibold text-white">Comunidade Ativa</h3>
+                                    <p class="text-sm text-gray-400">Avaliações e comentários</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-4 p-4 rounded-lg bg-white/5 border border-orange-500/20 hover:border-orange-500/50 transition-colors duration-300">
+                                <span class="text-3xl">🔖</span>
+                                <div>
+                                    <h3 class="font-semibold text-white">Sua Biblioteca Pessoal</h3>
+                                    <p class="text-sm text-gray-400">Guarde seus mangás favoritos</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center gap-4 p-4 rounded-lg bg-white/5 border border-orange-500/20 hover:border-orange-500/50 transition-colors duration-300">
+                                <span class="text-3xl">🚀</span>
+                                <div>
+                                    <h3 class="font-semibold text-white">Atualizações em Tempo Real</h3>
+                                    <p class="text-sm text-gray-400">Notificações de novos capítulos</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side - Login Form -->
+                <div class="form-animate">
+                    <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 lg:p-10 border border-orange-500/20 shadow-2xl">
+                        <h1 class="header-animate text-3xl font-bold text-white mb-2">Login</h1>
+                        <p class="header-animate text-gray-400 mb-8">Entre com suas credenciais</p>
+
+                        <form class="space-y-6">
+                            <!-- Email Field -->
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-300 mb-2">
+                                    Email
+                                </label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    placeholder="seu.email@exemplo.com"
+                                    class="input-focus w-full px-4 py-3 bg-white/5 border border-slate-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20"
+                                    required
+                                >
+                            </div>
+
+                            <!-- Password Field -->
+                            <div>
+                                <label for="password" class="block text-sm font-medium text-gray-300 mb-2">
+                                    Senha
+                                </label>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    placeholder="••••••••"
+                                    class="input-focus w-full px-4 py-3 bg-white/5 border border-slate-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20"
+                                    required
+                                >
+                            </div>
+
+                            <!-- Remember Me -->
+                            <div class="flex items-center gap-2">
+                                <input
+                                    type="checkbox"
+                                    id="remember"
+                                    class="w-4 h-4 rounded bg-white/5 border border-slate-600 checked:bg-orange-500 checked:border-orange-500 cursor-pointer"
+                                >
+                                <label for="remember" class="text-sm text-gray-400 cursor-pointer hover:text-gray-300 transition-colors duration-200">
+                                    Lembrar de mim
+                                </label>
+                            </div>
+
+                            <!-- Login Button -->
+                            <button
+                                type="submit"
+                                class="button-shine w-full py-3 px-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-orange-500/50"
+                            >
+                                Entrar
+                            </button>
+
+                            <!-- Divider -->
+                            <div class="relative my-8">
+                                <div class="absolute inset-0 flex items-center">
+                                    <div class="w-full border-t border-slate-600"></div>
+                                </div>
+                                <div class="relative flex justify-center text-sm">
+                                    <span class="px-2 bg-gradient-to-br from-slate-800 to-slate-900 text-gray-400">ou</span>
+                                </div>
+                            </div>
+
+                            <!-- Forgot Password -->
+                            <a href="#" class="block text-center text-orange-500 hover:text-orange-400 font-medium transition-colors duration-200">
+                                Esqueceu sua senha?
+                            </a>
+                        </form>
+
+                        <!-- Sign Up Link -->
+                        <div class="mt-8 text-center border-t border-slate-600 pt-6">
+                            <p class="text-gray-400">Não tem uma conta?
+                                <a href="/register" class="text-orange-500 hover:text-orange-400 font-semibold transition-colors duration-200">
+                                    Cadastre-se aqui
+                                </a>
+                            </p>
+                        </div>
+
+                        <!-- Terms and Privacy -->
+                        <div class="mt-6 text-center">
+                            <p class="text-xs text-gray-500">
+                                Ao fazer login, você concorda com nossos
+                                <a href="#" class="text-orange-500/70 hover:text-orange-500 transition-colors duration-200">Termos de Serviço</a>
+                                e
+                                <a href="#" class="text-orange-500/70 hover:text-orange-500 transition-colors duration-200">Política de Privacidade</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-b from-slate-900 to-slate-950 border-t-2 border-orange-500 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center text-gray-400">
+                <p class="mb-2">&copy; 2024 Manga Livre - Todos os direitos reservados</p>
+                <p>Uma plataforma dedicada aos amantes de mangás</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Add animation to button
+            const button = this.querySelector('button[type="submit"]');
+            button.style.opacity = '0.7';
+            
+            setTimeout(() => {
+                button.style.opacity = '1';
+                // Aqui você faria a requisição real para o servidor
+                console.log('Login realizado!');
+            }, 500);
+        });
+
+        // Input animation
+        document.querySelectorAll('input[type="email"], input[type="password"]').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.closest('div').classList.add('scale-105');
+            });
+            
+            input.addEventListener('blur', function() {
+                this.closest('div').classList.remove('scale-105');
+            });
+        });
+    </script>
+</body>
+</html>

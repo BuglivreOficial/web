@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manga Livre - Leia Mangás Online</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .drawer-open {
+            animation: slideIn 0.4s ease forwards;
+        }
+
+        .drawer-close {
+            animation: slideOut 0.4s ease forwards;
+        }
+
+        .manga-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .manga-card:nth-child(1) { animation-delay: 0.1s; }
+        .manga-card:nth-child(2) { animation-delay: 0.2s; }
+        .manga-card:nth-child(3) { animation-delay: 0.3s; }
+        .manga-card:nth-child(4) { animation-delay: 0.4s; }
+        .manga-card:nth-child(5) { animation-delay: 0.5s; }
+        .manga-card:nth-child(6) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white min-h-screen flex flex-col">
+    <!-- Drawer Backdrop -->
+    <div id="drawerBackdrop" class="fixed inset-0 bg-black bg-opacity-50 hidden transition-opacity duration-300 z-40"></div>
+
+    <!-- Drawer -->
+    <div id="drawer" class="fixed left-0 top-0 h-screen w-64 bg-gradient-to-b from-slate-950 to-slate-900 shadow-2xl border-r border-orange-500/20 z-50 hidden overflow-y-auto">
+        <!-- Drawer Header -->
+        <div class="p-6 border-b border-orange-500/20">
+            <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-bold text-orange-500">Menu</h2>
+                <button id="closeDrawer" class="text-gray-400 hover:text-white transition-colors duration-200 text-2xl">
+                    ✕
+                </button>
+            </div>
+        </div>
+
+        <!-- Drawer Content -->
+        <nav class="p-4 space-y-2">
+            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-orange-500/10 hover:text-orange-500 transition-all duration-200 group">
+                <span class="text-xl">🏠</span>
+                <span>Início</span>
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-orange-500/10 hover:text-orange-500 transition-all duration-200 group">
+                <span class="text-xl">✨</span>
+                <span>Em Destaque</span>
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-orange-500/10 hover:text-orange-500 transition-all duration-200 group">
+                <span class="text-xl">🔥</span>
+                <span>Populares</span>
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-orange-500/10 hover:text-orange-500 transition-all duration-200 group">
+                <span class="text-xl">❤️</span>
+                <span>Meus Favoritos</span>
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-orange-500/10 hover:text-orange-500 transition-all duration-200 group">
+                <span class="text-xl">📚</span>
+                <span>Minhas Leituras</span>
+            </a>
+        </nav>
+
+        <!-- Drawer Divider -->
+        <div class="my-6 border-t border-orange-500/20"></div>
+
+        <!-- Categories -->
+        <div class="px-6 pb-6">
+            <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Categorias</h3>
+            <div class="space-y-2">
+                <button class="w-full text-left px-3 py-2 rounded text-sm text-gray-300 hover:bg-orange-500/10 hover:text-orange-500 transition-colors duration-200">Ação</button>
+                <button class="w-full text-left px-3 py-2 rounded text-sm text-gray-300 hover:bg-orange-500/10 hover:text-orange-500 transition-colors duration-200">Romance</button>
+                <button class="w-full text-left px-3 py-2 rounded text-sm text-gray-300 hover:bg-orange-500/10 hover:text-orange-500 transition-colors duration-200">Fantasia</button>
+                <button class="w-full text-left px-3 py-2 rounded text-sm text-gray-300 hover:bg-orange-500/10 hover:text-orange-500 transition-colors duration-200">Mistério</button>
+                <button class="w-full text-left px-3 py-2 rounded text-sm text-gray-300 hover:bg-orange-500/10 hover:text-orange-500 transition-colors duration-200">Comédia</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-30 bg-gradient-to-b from-slate-950 to-slate-900 border-b-2 border-orange-500 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between py-4">
+                <!-- Menu Button -->
+                <button id="menuBtn" class="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-orange-500/10 transition-colors duration-200 md:hidden">
+                    <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+
+                <!-- Logo -->
+                <a href="#" class="text-2xl md:text-3xl font-bold text-orange-500 hover:text-orange-400 transition-colors duration-200 flex items-center gap-2 flex-1 md:flex-none">
+                    📚 Manga Livre
+                </a>
+
+                <!-- Search Box -->
+                <div class="hidden md:flex flex-1 max-w-md mx-auto">
+                    <input 
+                        type="text" 
+                        placeholder="Pesquise por um mangá..." 
+                        class="w-full px-4 py-2 bg-white/5 border border-slate-600 rounded-full text-white placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200"
+                    >
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center gap-6">
+                    <a href="#" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">Início</a>
+                    <a href="#" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">Categorias</a>
+                    <a href="#" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">Favoritos</a>
+                </nav>
+            </div>
+
+            <!-- Mobile Search -->
+            <div class="md:hidden pb-4">
+                <input 
+                    type="text" 
+                    placeholder="Pesquise..." 
+                    class="w-full px-4 py-2 bg-white/5 border border-slate-600 rounded-full text-white placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200"
+                >
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-10">
+        <!-- Em Destaque Section -->
+        <section class="mb-14">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-orange-500 mb-8 relative pb-3">
+                ✨ Em Destaque
+                <span class="absolute bottom-0 left-0 w-16 h-1 bg-gradient-to-r from-orange-500 to-transparent rounded-full"></span>
+            </h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-5">
+                <!-- Card 1 -->
+                <div class="manga-card group">
+                    <div class="relative overflow-hidden rounded-lg bg-gradient-to-br from-slate-700 to-slate-900 aspect-[3/4]">
+                        <img src="https://via.placeholder.com/200x300?text=Manga+1" alt="Manga 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-2 right-2 bg-orange-500 text-black text-xs font-bold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">NOVO</div>
+                    </div>
+                    <div class="p-3 bg-gradient-to-b from-slate-800 to-slate-900">
+                        <h3 class="font-semibold text-sm line-clamp-2 text-white group-hover:text-orange-400 transition-colors duration-200">Aventuras Épicas</h3>
+                        <div class="flex items-center gap-1 mt-2 text-xs text-orange-500">
+                            <span>★★★★★</span> <span class="text-gray-400">4.8</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="manga-card group">
+                    <div class="relative overflow-hidden rounded-lg bg-gradient-to-br from-slate-700 to-slate-900 aspect-[3/4]">
+                        <img src="https://via.placeholder.com/200x300?text=Manga+2" alt="Manga 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-2 right-2 bg-orange-500 text-black text-xs font-bold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">HOT</div>
+                    </div>
+                    <div class="p-3 bg-gradient-to-b from-slate-800 to-slate-900">
+                        <h3 class="font-semibold text-sm line-clamp-2 text-white group-hover:text-orange-400 transition-colors duration-200">Romance Cósmico</h3>
+                        <div class="flex items-center gap-1 mt-2 text-xs text-orange-500">
+                            <span>★★★★☆</span> <span class="text-gray-400">4.5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="manga-card group">
+                    <div class="relative overflow-hidden rounded-lg bg-gradient-to-br from-slate-700 to-slate-900 aspect-[3/4]">
+                        <img src="https://via.placeholder.com/200x300?text=Manga+3" alt="Manga 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-2 right-2 bg-orange-500 text-black text-xs font-bold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">TOP</div>
+                    </div>
+                    <div class="p-3 bg-gradient-to-b from-slate-800 to-slate-900">
+                        <h3 class="font-semibold text-sm line-clamp-2 text-white group-hover:text-orange-400 transition-colors duration-200">Mistério Oscuro</h3>
+                        <div class="flex items-center gap-1 mt-2 text-xs text-orange-500">
+                            <span>★★★★★</span> <span class="text-gray-400">4.9</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="manga-card group">
+                    <div class="relative overflow-hidden rounded-lg bg-gradient-to-br from-slate-700 to-slate-900 aspect-[3/4]">
+                        <img src="https://via.placeholder.com/200x300?text=Manga+4" alt="Manga 4" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-2 right-2 bg-orange-500 text-black text-xs font-bold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">NOVO</div>
+                    </div>
+                    <div class="p-3 bg-gradient-to-b from-slate-800 to-slate-900">
+                        <h3 class="font-semibold text-sm line-clamp-2 text-white group-hover:text-orange-400 transition-colors duration-200">Ação Intensa</h3>
+                        <div class="flex items-center gap-1 mt-2 text-xs text-orange-500">
+                            <span>★★★★☆</span> <span class="text-gray-400">4.6</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="manga-card group">
+                    <div class="relative overflow-hidden rounded-lg bg-gradient-to-br from-slate-700 to-slate-900 aspect-[3/4]">
+                        <img src="https://via.placeholder.com/200x300?text=Manga+5" alt="Manga 5" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-2 right-2 bg-orange-500 text-black text-xs font-bold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">HOT</div>
+                    </div>
+                    <div class="p-3 bg-gradient-to-b from-slate-800 to-slate-900">
+                        <h3 class="font-semibold text-sm line-clamp-2 text-white group-hover:text-orange-400 transition-colors duration-200">Fantasia Urbana</h3>
+                        <div class="flex items-center gap-1 mt-2 text-xs text-orange-500">
+                            <span>★★★★★</span> <span class="text-gray-400">4.7</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="manga-card group">
+                    <div class="relative overflow-hidden rounded-lg bg-gradient-to-br from-slate-700 to-slate-900 aspect-[3/4]">
+                        <img src="https://via.placeholder.com/200x300?text=Manga+6" alt="Manga 6" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-2 right-2 bg-orange-500 text-black text-xs font-bold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">TOP</div>
+                    </div>
+                    <div class="p-3 bg-gradient-to-b from-slate-800 to-slate-900">
+                        <h3 class="font-semibold text-sm line-clamp-2 text-white group-hover:text-orange-400 transition-colors duration-200">Superpoderes</h3>
+                        <div class="flex items-center gap-1 mt-2 text-xs text-orange-500">
+                            <span>★★★★☆</span> <span class="text-gray-400">4.4</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Populares Section -->
+        <section>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-orange-500 mb-8 relative pb-3">
+                🔥 Populares
+                <span class="absolute bottom-0 left-0 w-16 h-1 bg-gradient-to-r from-orange-500 to-transparent rounded-full"></span>
+            </h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-5">
+                <!-- Card 1 -->
+                <div class="manga-card group">
+                    <div class="relative overflow-hidden rounded-lg bg-gradient-to-br from-slate-700 to-slate-900 aspect-[3/4]">
+                        <img src="https://via.placeholder.com/200x300?text=Popular+1" alt="Popular 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-2 right-2 bg-orange-500 text-black text-xs font-bold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">TOP</div>
+                    </div>
+                    <div class="p-3 bg-gradient-to-b from-slate-800 to-slate-900">
+                        <h3 class="font-semibold text-sm line-clamp-2 text-white group-hover:text-orange-400 transition-colors duration-200">Clássico Imortal</h3>
+                        <div class="flex items-center gap-1 mt-2 text-xs text-orange-500">
+                            <span>★★★★★</span> <span class="text-gray-400">4.9</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="manga-card group">
+                    <div class="relative overflow-hidden rounded-lg bg-gradient-to-br from-slate-700 to-slate-900 aspect-[3/4]">
+                        <img src="https://via.placeholder.com/200x300?text=Popular+2" alt="Popular 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-2 right-2 bg-orange-500 text-black text-xs font-bold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">NOVO</div>
+                    </div>
+                    <div class="p-3 bg-gradient-to-b from-slate-800 to-slate-900">
+                        <h3 class="font-semibold text-sm line-clamp-2 text-white group-hover:text-orange-400 transition-colors duration-200">Jornada Heróica</h3>
+                        <div class="flex items-center gap-1 mt-2 text-xs text-orange-500">
+                            <span>★★★★★</span> <span class="text-gray-400">4.8</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="manga-card group">
+                    <div class="relative overflow-hidden rounded-lg bg-gradient-to-br from-slate-700 to-slate-900 aspect-[3/4]">
+                        <img src="https://via.placeholder.com/200x300?text=Popular+3" alt="Popular 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-2 right-2 bg-orange-500 text-black text-xs font-bold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">HOT</div>
+                    </div>
+                    <div class="p-3 bg-gradient-to-b from-slate-800 to-slate-900">
+                        <h3 class="font-semibold text-sm line-clamp-2 text-white group-hover:text-orange-400 transition-colors duration-200">Magia Antiga</h3>
+                        <div class="flex items-center gap-1 mt-2 text-xs text-orange-500">
+                            <span>★★★★☆</span> <span class="text-gray-400">4.5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="manga-card group">
+                    <div class="relative overflow-hidden rounded-lg bg-gradient-to-br from-slate-700 to-slate-900 aspect-[3/4]">
+                        <img src="https://via.placeholder.com/200x300?text=Popular+4" alt="Popular 4" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-2 right-2 bg-orange-500 text-black text-xs font-bold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">TOP</div>
+                    </div>
+                    <div class="p-3 bg-gradient-to-b from-slate-800 to-slate-900">
+                        <h3 class="font-semibold text-sm line-clamp-2 text-white group-hover:text-orange-400 transition-colors duration-200">Destino Traçado</h3>
+                        <div class="flex items-center gap-1 mt-2 text-xs text-orange-500">
+                            <span>★★★★★</span> <span class="text-gray-400">4.7</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="manga-card group">
+                    <div class="relative overflow-hidden rounded-lg bg-gradient-to-br from-slate-700 to-slate-900 aspect-[3/4]">
+                        <img src="https://via.placeholder.com/200x300?text=Popular+5" alt="Popular 5" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-2 right-2 bg-orange-500 text-black text-xs font-bold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">NOVO</div>
+                    </div>
+                    <div class="p-3 bg-gradient-to-b from-slate-800 to-slate-900">
+                        <h3 class="font-semibold text-sm line-clamp-2 text-white group-hover:text-orange-400 transition-colors duration-200">Intriga Política</h3>
+                        <div class="flex items-center gap-1 mt-2 text-xs text-orange-500">
+                            <span>★★★★☆</span> <span class="text-gray-400">4.6</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="manga-card group">
+                    <div class="relative overflow-hidden rounded-lg bg-gradient-to-br from-slate-700 to-slate-900 aspect-[3/4]">
+                        <img src="https://via.placeholder.com/200x300?text=Popular+6" alt="Popular 6" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-2 right-2 bg-orange-500 text-black text-xs font-bold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">HOT</div>
+                    </div>
+                    <div class="p-3 bg-gradient-to-b from-slate-800 to-slate-900">
+                        <h3 class="font-semibold text-sm line-clamp-2 text-white group-hover:text-orange-400 transition-colors duration-200">Segredo Guardado</h3>
+                        <div class="flex items-center gap-1 mt-2 text-xs text-orange-500">
+                            <span>★★★★★</span> <span class="text-gray-400">4.8</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-b from-slate-900 to-slate-950 border-t-2 border-orange-500 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center text-gray-400">
+                <p class="mb-2">&copy; 2024 Manga Livre - Todos os direitos reservados</p>
+                <p>Uma plataforma dedicada aos amantes de mangás</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Drawer functionality
+        const drawer = document.getElementById('drawer');
+        const drawerBackdrop = document.getElementById('drawerBackdrop');
+        const menuBtn = document.getElementById('menuBtn');
+        const closeDrawer = document.getElementById('closeDrawer');
+
+        function openDrawer() {
+            drawer.classList.remove('hidden');
+            drawer.classList.add('drawer-open');
+            drawerBackdrop.classList.remove('hidden');
+        }
+
+        function closeDrawerFunc() {
+            drawer.classList.add('drawer-close');
+            drawerBackdrop.classList.add('opacity-0');
+            setTimeout(() => {
+                drawer.classList.add('hidden');
+                drawer.classList.remove('drawer-open', 'drawer-close');
+                drawerBackdrop.classList.remove('hidden', 'opacity-0');
+            }, 400);
+        }
+
+        menuBtn.addEventListener('click', openDrawer);
+        closeDrawer.addEventListener('click', closeDrawerFunc);
+        drawerBackdrop.addEventListener('click', closeDrawerFunc);
+
+        // Close drawer when clicking on drawer links
+        document.querySelectorAll('#drawer a').forEach(link => {
+            link.addEventListener('click', closeDrawerFunc);
+        });
+    </script>
+</body>
+</html>
