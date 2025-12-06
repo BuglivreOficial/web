@@ -1,8 +1,15 @@
 <?php
 namespace App\Controller;
 
-class HomeController {
-    public function index() {
-        require('./../template/app/register/index.html');
+use Core\Http\Response;
+
+class HomeController
+{
+    public function index()
+    {
+        Response::render("app/home/index.html", [
+            'title' => 'Home Page',
+            'content' => 'Welcome to the Home Page!'
+        ]);
     }
 }
