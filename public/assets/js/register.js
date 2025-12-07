@@ -116,11 +116,11 @@ class NeonCyberLoginForm {
             return false;
         }
 
-        if (name.length < 3) {
+        if (name.length < 1) {
             this.showError('name','[ ERROR: NOME_MUITO_CURTO ]');
             return false;
         }
-        if (name.length > 24) {
+        if (name.length > 128) {
             this.showError('name','[ ERROR: NOME_MUITO_LONGO ]');
             return false;
         }
@@ -134,12 +134,12 @@ class NeonCyberLoginForm {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         
         if (!email) {
-            this.showError('email', '[ ERROR: EMAIL_REQUIRED ]');
+            this.showError('email', '[ ERROR: EMAIL_REQUERIDO ]');
             return false;
         }
         
         if (!emailRegex.test(email)) {
-            this.showError('email', '[ ERROR: INVALID_FORMAT ]');
+            this.showError('email', '[ ERROR: FORMATO_INVÁLIDO ]');
             return false;
         }
         
@@ -151,12 +151,16 @@ class NeonCyberLoginForm {
         const password = this.passwordInput.value;
         
         if (!password) {
-            this.showError('password', '[ ERROR: ACCESS_CODE_REQUIRED ]');
+            this.showError('password', '[ ERROR: SENHA_REQUERIDA ]');
             return false;
         }
         
         if (password.length < 6) {
-            this.showError('password', '[ ERROR: CODE_TOO_SHORT ]');
+            this.showError('password', '[ ERROR: SENHA_MUITO_CURTA ]');
+            return false;
+        }
+        if (password.length > 24) {
+            this.showError('password', '[ ERROR: SENHA_MUITO_LONGA ]');
             return false;
         }
         
@@ -209,7 +213,7 @@ class NeonCyberLoginForm {
             // Show matrix success
             this.showMatrixSuccess();
         } catch (error) {
-            this.showError('password', '[ ERROR: CONNECTION_FAILED ]');
+            this.showError('password', '[ ERROR: FALHA_NA_CONEXÃO ]');
         } finally {
             this.setLoading(false);
         }

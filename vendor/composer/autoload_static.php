@@ -62,6 +62,7 @@ class ComposerStaticInit7832d634c4eba479fd81208dac4b2d7d
         ),
         'A' =>
         array (
+            'Appwrite\\' => 9,
             'App\\' => 4,
         ),
     );
@@ -130,6 +131,10 @@ class ComposerStaticInit7832d634c4eba479fd81208dac4b2d7d
         'Core\\' =>
         array (
             0 => __DIR__ . '/../..' . '/core',
+        ),
+        'Appwrite\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/appwrite/appwrite/src/Appwrite',
         ),
         'App\\' =>
         array (

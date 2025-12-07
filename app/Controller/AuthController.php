@@ -1,6 +1,8 @@
 <?php
 namespace App\Controller;
 
+use App\Model\Register;
+use Appwrite\AppwriteException;
 use Core\Http\Response;
 
 class AuthController {
@@ -14,5 +16,11 @@ class AuthController {
 
     public function resetPassword() {
         Response::render('app/reset-password/index.html', []);
+    }
+
+    public function create() {
+            $register = new Register('teste', 'teste@gmail.com', '123456');
+            var_dump($register->create());
+    
     }
 }

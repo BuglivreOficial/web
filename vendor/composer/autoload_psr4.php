@@ -22,5 +22,6 @@ return array(
     'GrahamCampbell\\ResultType\\' => array($vendorDir . '/graham-campbell/result-type/src'),
     'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
     'Core\\' => array($baseDir . '/core'),
+    'Appwrite\\' => array($vendorDir . '/appwrite/appwrite/src/Appwrite'),
     'App\\' => array($baseDir . '/app'),
 );

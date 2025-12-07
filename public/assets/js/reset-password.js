@@ -239,8 +239,6 @@ class NeonCyberLoginForm {
         setTimeout(() => {
             this.form.style.display = 'none';
             //document.querySelector('.matrix-social').style.display = 'none';
-            document.querySelector('.matrix-signup').style.display = 'none';
-            document.querySelector('.cyber-divider').style.display = 'none';
             
             // Show cyber success
             this.successMessage.classList.add('show');
