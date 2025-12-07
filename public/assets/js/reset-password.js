@@ -2,10 +2,7 @@
 class NeonCyberLoginForm {
     constructor() {
         this.form = document.getElementById('loginForm');
-        this.nameInput = document.getElementById('name');
         this.emailInput = document.getElementById('email');
-        this.passwordInput = document.getElementById('password');
-        this.passwordToggle = document.getElementById('passwordToggle');
         this.submitButton = this.form.querySelector('.neon-button');
         this.successMessage = document.getElementById('successMessage');
         this.socialButtons = document.querySelectorAll('.social-matrix');
@@ -15,49 +12,23 @@ class NeonCyberLoginForm {
     
     init() {
         this.bindEvents();
-        this.setupPasswordToggle();
         this.setupSocialButtons();
         this.setupCyberEffects();
     }
     
     bindEvents() {
         this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-        this.nameInput.addEventListener('blur', () => this.validateName());
         this.emailInput.addEventListener('blur', () => this.validateEmail());
-        this.passwordInput.addEventListener('blur', () => this.validatePassword());
-        this.nameInput.addEventListener('input', () => this.clearError('name'));
         this.emailInput.addEventListener('input', () => this.clearError('email'));
-        this.passwordInput.addEventListener('input', () => this.clearError('password'));
         
         // Add placeholder for label animations
         this.emailInput.setAttribute('placeholder', ' ');
-        this.passwordInput.setAttribute('placeholder', ' ');
     }
-    
-    setupPasswordToggle() {
-        this.passwordToggle.addEventListener('click', () => {
-            const type = this.passwordInput.type === 'password' ? 'text' : 'password';
-            this.passwordInput.type = type;
-            
-            this.passwordToggle.classList.toggle('toggle-active', type === 'text');
-            
-            // Add cyber effect
-            this.triggerCyberGlitch(this.passwordToggle);
-        });
-    }
-    
-    setupSocialButtons() {
-        this.socialButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                const provider = button.querySelector('span').textContent.trim();
-                this.handleSocialLogin(provider, button);
-            });
-        });
-    }
+   
     
     setupCyberEffects() {
         // Add cyber scanning effects on input focus
-        [this.emailInput, this.passwordInput].forEach(input => {
+        [this.emailInput].forEach(input => {
             input.addEventListener('focus', (e) => {
                 this.triggerCyberScan(e.target.closest('.cyber-field'));
             });
@@ -109,25 +80,6 @@ class NeonCyberLoginForm {
         }, 2000);
     }
 
-    validateName() {
-        const name = this.nameInput.value.trim();
-        if (!name) {
-            this.showError('name', '[ ERROR: NOME_REQUERIDO ]');
-            return false;
-        }
-
-        if (name.length < 3) {
-            this.showError('name','[ ERROR: NOME_MUITO_CURTO ]');
-            return false;
-        }
-        if (name.length > 24) {
-            this.showError('name','[ ERROR: NOME_MUITO_LONGO ]');
-            return false;
-        }
-
-        this.clearError('name');
-        return true;
-    }
     
     validateEmail() {
         const email = this.emailInput.value.trim();
@@ -147,22 +99,6 @@ class NeonCyberLoginForm {
         return true;
     }
     
-    validatePassword() {
-        const password = this.passwordInput.value;
-        
-        if (!password) {
-            this.showError('password', '[ ERROR: ACCESS_CODE_REQUIRED ]');
-            return false;
-        }
-        
-        if (password.length < 6) {
-            this.showError('password', '[ ERROR: CODE_TOO_SHORT ]');
-            return false;
-        }
-        
-        this.clearError('password');
-        return true;
-    }
     
     showError(field, message) {
         const cyberField = document.getElementById(field).closest('.cyber-field');
@@ -190,11 +126,9 @@ class NeonCyberLoginForm {
     async handleSubmit(e) {
         e.preventDefault();
         
-        const isNamelValid = this.validateName();
         const isEmailValid = this.validateEmail();
-        const isPasswordValid = this.validatePassword();
         
-        if (!isNamelValid || !isEmailValid || !isPasswordValid) {
+        if (!isEmailValid) {
             // Add system error glitch
             this.triggerSystemGlitch();
             return;
@@ -304,7 +238,7 @@ class NeonCyberLoginForm {
         
         setTimeout(() => {
             this.form.style.display = 'none';
-            document.querySelector('.matrix-social').style.display = 'none';
+            //document.querySelector('.matrix-social').style.display = 'none';
             document.querySelector('.matrix-signup').style.display = 'none';
             document.querySelector('.cyber-divider').style.display = 'none';
             

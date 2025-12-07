@@ -2,7 +2,6 @@
 class NeonCyberLoginForm {
     constructor() {
         this.form = document.getElementById('loginForm');
-        this.nameInput = document.getElementById('name');
         this.emailInput = document.getElementById('email');
         this.passwordInput = document.getElementById('password');
         this.passwordToggle = document.getElementById('passwordToggle');
@@ -22,10 +21,8 @@ class NeonCyberLoginForm {
     
     bindEvents() {
         this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-        this.nameInput.addEventListener('blur', () => this.validateName());
         this.emailInput.addEventListener('blur', () => this.validateEmail());
         this.passwordInput.addEventListener('blur', () => this.validatePassword());
-        this.nameInput.addEventListener('input', () => this.clearError('name'));
         this.emailInput.addEventListener('input', () => this.clearError('email'));
         this.passwordInput.addEventListener('input', () => this.clearError('password'));
         
@@ -108,26 +105,6 @@ class NeonCyberLoginForm {
             }
         }, 2000);
     }
-
-    validateName() {
-        const name = this.nameInput.value.trim();
-        if (!name) {
-            this.showError('name', '[ ERROR: NOME_REQUERIDO ]');
-            return false;
-        }
-
-        if (name.length < 3) {
-            this.showError('name','[ ERROR: NOME_MUITO_CURTO ]');
-            return false;
-        }
-        if (name.length > 24) {
-            this.showError('name','[ ERROR: NOME_MUITO_LONGO ]');
-            return false;
-        }
-
-        this.clearError('name');
-        return true;
-    }
     
     validateEmail() {
         const email = this.emailInput.value.trim();
@@ -190,11 +167,10 @@ class NeonCyberLoginForm {
     async handleSubmit(e) {
         e.preventDefault();
         
-        const isNamelValid = this.validateName();
         const isEmailValid = this.validateEmail();
         const isPasswordValid = this.validatePassword();
         
-        if (!isNamelValid || !isEmailValid || !isPasswordValid) {
+        if (!isEmailValid || !isPasswordValid) {
             // Add system error glitch
             this.triggerSystemGlitch();
             return;

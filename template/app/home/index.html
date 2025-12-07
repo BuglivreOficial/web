@@ -1,5 +1,51 @@
 {% extends 'app/base.html' %}
 {% block content%}
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="geometric-shapes">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+        <div class="shape shape4"></div>
+        <div class="shape shape5"></div>
+        <div class="shape shape6"></div>
+    </div>
+
+    <div class="hero-content">
+        <div class="hero-text">
+            <h1>API<br>Bug Livre</h1>
+            <p>Oferecemos aos usuários uma maneira rápida e fácil de catalogar suas coleções de animes e mangás, além de
+                uma plataforma para se comunicar com outros fãs e se manter atualizado sobre as principais notícias do
+                setor.</p>
+            <a href="{{ url('/login') }}" class="cta-button">Começa</a>
+        </div>
+
+        <div class="hero-visual">
+            <div class="city-container">
+                <div class="building building1">
+                    <div class="building-fill"></div>
+                    <div class="building-windows"></div>
+                </div>
+                <div class="building building2">
+                    <div class="building-fill"></div>
+                    <div class="building-windows"></div>
+                </div>
+                <div class="building building3">
+                    <div class="building-fill"></div>
+                    <div class="building-windows"></div>
+                </div>
+                <div class="building building4">
+                    <div class="building-fill"></div>
+                    <div class="building-windows"></div>
+                </div>
+                <div class="neon-line neon-line1"></div>
+                <div class="neon-line neon-line2"></div>
+            </div>
+        </div>
+    </div>
+</section>
 <!-- Dashboard Section -->
 <section class="dashboard-section" id="dashboard">
     <div class="dashboard-container">

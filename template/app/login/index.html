@@ -1,301 +1,173 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Manga Livre</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            font-family: 'Poppins', sans-serif;
-        }
+{% extends 'app/base.html' %}
+{% block head %}
+<script src="assets/js/login.js"></script>
+{% endblock %}
+{% block content%}
+<div class="cyber-grid">
+    <div class="grid-line grid-h-1"></div>
+    <div class="grid-line grid-v-1"></div>
+    <div class="grid-line grid-h-2"></div>
+    <div class="grid-line grid-v-2"></div>
+    <div class="grid-line grid-h-3"></div>
+    <div class="cyber-glitch glitch-1"></div>
+    <div class="cyber-glitch glitch-2"></div>
+</div>
 
-        html {
-            scroll-behavior: smooth;
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .header-animate {
-            animation: fadeInDown 0.8s ease forwards;
-        }
-
-        .form-animate {
-            animation: fadeInUp 0.8s ease forwards;
-            animation-delay: 0.2s;
-            opacity: 0;
-        }
-
-        .decoration-animate {
-            animation: slideInLeft 0.8s ease forwards;
-            animation-delay: 0.4s;
-            opacity: 0;
-        }
-
-        .input-focus {
-            transition: all 0.3s ease;
-        }
-
-        .input-focus:focus {
-            border-color: #ff6b00;
-            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
-        }
-
-        .button-shine {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .button-shine::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .button-shine:hover::before {
-            left: 100%;
-        }
-    </style>
-</head>
-<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white min-h-screen flex flex-col">
-    <!-- Header -->
-    <header class="sticky top-0 z-30 bg-gradient-to-b from-slate-950 to-slate-900 border-b-2 border-orange-500 shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between py-4">
-                <!-- Logo -->
-                <a href="/" class="text-2xl md:text-3xl font-bold text-orange-500 hover:text-orange-400 transition-colors duration-200 flex items-center gap-2">
-                    📚 Manga Livre
-                </a>
-
-                <!-- Desktop Navigation -->
-                <nav class="hidden md:flex items-center gap-6">
-                    <a href="/" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">Início</a>
-                    <span class="text-gray-500">|</span>
-                    <span class="text-gray-400">Login</span>
-                </nav>
+<div class="login-container">
+    <div class="cyber-terminal">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <div class="term-btn btn-red"></div>
+                <div class="term-btn btn-yellow"></div>
+                <div class="term-btn btn-green"></div>
             </div>
+            <div class="terminal-title">LOGIN_INTERFACE.exe</div>
         </div>
-    </header>
 
-    <!-- Main Content -->
-    <main class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-10">
-        <div class="w-full max-w-7xl">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
-                <!-- Left Side - Decorative -->
-                <div class="hidden md:flex flex-col justify-center decoration-animate">
-                    <div class="space-y-6">
-                        <div>
-                            <h2 class="text-4xl lg:text-5xl font-bold text-orange-500 mb-4">Bem-vindo de volta!</h2>
-                            <p class="text-xl text-gray-300">Acesse sua conta para continuar lendo seus mangás favoritos</p>
+        <div class="cyber-content">
+            <div class="neon-header">
+                <div class="cyber-logo">
+                    <div class="logo-frame">
+                        <div class="logo-core">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                                <path d="M20 4L36 12v16L20 36L4 28V12L20 4z" stroke="currentColor" stroke-width="2"
+                                    fill="none" />
+                                <circle cx="20" cy="20" r="6" stroke="currentColor" stroke-width="1.5" />
+                                <path d="M14 14l12 12M26 14l-12 12" stroke="currentColor" stroke-width="1" />
+                            </svg>
                         </div>
+                        <div class="logo-scanner"></div>
+                    </div>
+                    <div class="neon-glow"></div>
+                </div>
+                <h1 class="cyber-title">
+                    <span class="title-glitch" data-text="CYPHER_NET">BUG_LIVRE_OFICIAL</span>
+                </h1>
+                <p class="access-text">[ ACESSO_AO_TERMINAL_SEGURO ]</p>
+            </div>
 
-                        <!-- Decorative Cards -->
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-4 p-4 rounded-lg bg-white/5 border border-orange-500/20 hover:border-orange-500/50 transition-colors duration-300">
-                                <span class="text-3xl">📚</span>
-                                <div>
-                                    <h3 class="font-semibold text-white">Vasta Biblioteca</h3>
-                                    <p class="text-sm text-gray-400">Milhares de mangás disponíveis</p>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center gap-4 p-4 rounded-lg bg-white/5 border border-orange-500/20 hover:border-orange-500/50 transition-colors duration-300">
-                                <span class="text-3xl">⭐</span>
-                                <div>
-                                    <h3 class="font-semibold text-white">Comunidade Ativa</h3>
-                                    <p class="text-sm text-gray-400">Avaliações e comentários</p>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center gap-4 p-4 rounded-lg bg-white/5 border border-orange-500/20 hover:border-orange-500/50 transition-colors duration-300">
-                                <span class="text-3xl">🔖</span>
-                                <div>
-                                    <h3 class="font-semibold text-white">Sua Biblioteca Pessoal</h3>
-                                    <p class="text-sm text-gray-400">Guarde seus mangás favoritos</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-center gap-4 p-4 rounded-lg bg-white/5 border border-orange-500/20 hover:border-orange-500/50 transition-colors duration-300">
-                                <span class="text-3xl">🚀</span>
-                                <div>
-                                    <h3 class="font-semibold text-white">Atualizações em Tempo Real</h3>
-                                    <p class="text-sm text-gray-400">Notificações de novos capítulos</p>
-                                </div>
-                            </div>
+            <form class="neon-form" id="loginForm" novalidate>
+                <div class="cyber-field">
+                    <div class="field-frame">
+                        <div class="field-border"></div>
+                        <input type="email" id="email" name="email" required autocomplete="email">
+                        <label for="email">&gt; ENDEREÇO_DE_EMAIL</label>
+                        <div class="cyber-scanner">
+                            <div class="scan-line"></div>
                         </div>
                     </div>
+                    <span class="cyber-error" id="emailError"></span>
                 </div>
 
-                <!-- Right Side - Login Form -->
-                <div class="form-animate">
-                    <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 lg:p-10 border border-orange-500/20 shadow-2xl">
-                        <h1 class="header-animate text-3xl font-bold text-white mb-2">Login</h1>
-                        <p class="header-animate text-gray-400 mb-8">Entre com suas credenciais</p>
-
-                        <form class="space-y-6">
-                            <!-- Email Field -->
-                            <div>
-                                <label for="email" class="block text-sm font-medium text-gray-300 mb-2">
-                                    Email
-                                </label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    placeholder="seu.email@exemplo.com"
-                                    class="input-focus w-full px-4 py-3 bg-white/5 border border-slate-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20"
-                                    required
-                                >
+                <div class="cyber-field">
+                    <div class="field-frame">
+                        <div class="field-border"></div>
+                        <input type="password" id="password" name="password" required autocomplete="current-password">
+                        <label for="password">&gt; CÓDIGO_DE_ACESSO</label>
+                        <button type="button" class="cyber-toggle" id="passwordToggle"
+                            aria-label="Toggle password visibility">
+                            <div class="toggle-frame">
+                                <svg class="eye-scan" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                    <path
+                                        d="M9 3c-4 0-7 3-8 6 1 3 4 6 8 6s7-3 8-6c-1-3-4-6-8-6zm0 10a4 4 0 110-8 4 4 0 010 8zm0-6a2 2 0 100 4 2 2 0 000-4z"
+                                        fill="currentColor" />
+                                </svg>
+                                <svg class="eye-blocked" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                    <path
+                                        d="M3 3l12 12M7 7a3 3 0 003 3m3-3C13 7 10 4 9 4c-1 0-3 1-4 2M9 14c4 0 7-3 8-6-1-1-2-2-3-3"
+                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
                             </div>
-
-                            <!-- Password Field -->
-                            <div>
-                                <label for="password" class="block text-sm font-medium text-gray-300 mb-2">
-                                    Senha
-                                </label>
-                                <input
-                                    type="password"
-                                    id="password"
-                                    placeholder="••••••••"
-                                    class="input-focus w-full px-4 py-3 bg-white/5 border border-slate-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20"
-                                    required
-                                >
-                            </div>
-
-                            <!-- Remember Me -->
-                            <div class="flex items-center gap-2">
-                                <input
-                                    type="checkbox"
-                                    id="remember"
-                                    class="w-4 h-4 rounded bg-white/5 border border-slate-600 checked:bg-orange-500 checked:border-orange-500 cursor-pointer"
-                                >
-                                <label for="remember" class="text-sm text-gray-400 cursor-pointer hover:text-gray-300 transition-colors duration-200">
-                                    Lembrar de mim
-                                </label>
-                            </div>
-
-                            <!-- Login Button -->
-                            <button
-                                type="submit"
-                                class="button-shine w-full py-3 px-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-orange-500/50"
-                            >
-                                Entrar
-                            </button>
-
-                            <!-- Divider -->
-                            <div class="relative my-8">
-                                <div class="absolute inset-0 flex items-center">
-                                    <div class="w-full border-t border-slate-600"></div>
-                                </div>
-                                <div class="relative flex justify-center text-sm">
-                                    <span class="px-2 bg-gradient-to-br from-slate-800 to-slate-900 text-gray-400">ou</span>
-                                </div>
-                            </div>
-
-                            <!-- Forgot Password -->
-                            <a href="#" class="block text-center text-orange-500 hover:text-orange-400 font-medium transition-colors duration-200">
-                                Esqueceu sua senha?
-                            </a>
-                        </form>
-
-                        <!-- Sign Up Link -->
-                        <div class="mt-8 text-center border-t border-slate-600 pt-6">
-                            <p class="text-gray-400">Não tem uma conta?
-                                <a href="/register" class="text-orange-500 hover:text-orange-400 font-semibold transition-colors duration-200">
-                                    Cadastre-se aqui
-                                </a>
-                            </p>
-                        </div>
-
-                        <!-- Terms and Privacy -->
-                        <div class="mt-6 text-center">
-                            <p class="text-xs text-gray-500">
-                                Ao fazer login, você concorda com nossos
-                                <a href="#" class="text-orange-500/70 hover:text-orange-500 transition-colors duration-200">Termos de Serviço</a>
-                                e
-                                <a href="#" class="text-orange-500/70 hover:text-orange-500 transition-colors duration-200">Política de Privacidade</a>
-                            </p>
+                        </button>
+                        <div class="cyber-scanner">
+                            <div class="scan-line"></div>
                         </div>
                     </div>
+                    <span class="cyber-error" id="passwordError"></span>
                 </div>
+
+                <div class="cyber-options">
+                    <label class="neon-checkbox">
+                        <input type="checkbox" id="remember" name="remember">
+                        <span class="checkbox-matrix">
+                            <div class="matrix-frame"></div>
+                            <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                                <path d="M1 4l2.5 2.5L9 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </span>
+                        <span class="checkbox-text">MANTER_SESSÃO</span>
+                    </label>
+                    <a href="{{ url('/reset-password') }}" class="cyber-link">RECUPERAÇÃO_DE_ACESSO</a>
+                </div>
+
+                <button type="submit" class="neon-button">
+                    <div class="btn-matrix"></div>
+                    <span class="btn-text">[ INICIALIZAR_CONEXÃO ]</span>
+                    <div class="btn-loader">
+                        <div class="matrix-loader">
+                            <div class="matrix-bar"></div>
+                            <div class="matrix-bar"></div>
+                            <div class="matrix-bar"></div>
+                            <div class="matrix-bar"></div>
+                        </div>
+                    </div>
+                    <div class="btn-glow"></div>
+                </button>
+            </form>
+
+            <div class="cyber-divider">
+                <div class="divider-grid"></div>
+                <span class="divider-text">[ PROTOCOLOS_ALTERNATIVOS ]</span>
+                <div class="divider-grid"></div>
+            </div>
+
+            <div class="matrix-social">
+                <button type="button" class="social-matrix">
+                    <div class="social-frame"></div>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="#00ff41">
+                        <path
+                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                    </svg>
+                    <span>GITHUB_NODE</span>
+                    <div class="social-glow"></div>
+                </button>
+
+                <button type="button" class="social-matrix">
+                    <div class="social-frame"></div>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="#ff0080">
+                        <path
+                            d="M7.12 0c3.94 0 7.12 3.18 7.12 7.12s-3.18 7.12-7.12 7.12S0 11.06 0 7.12C0 3.18 3.18 0 7.12 0zm1.8 5.56c.36 0 .68.14.92.38.24.24.38.56.38.92v3.28c0 .36-.14.68-.38.92-.24.24-.56.38-.92.38H5.64c-.36 0-.68-.14-.92-.38-.24-.24-.38-.56-.38-.92V6.86c0-.36.14-.68.38-.92.24-.24.56-.38.92-.38h3.28z" />
+                    </svg>
+                    <span>DISCORD_NET</span>
+                    <div class="social-glow"></div>
+                </button>
+            </div>
+
+            <div class="matrix-signup">
+                <span class="signup-prefix">[ NÃO_TEM_CONTA? ]</span>
+                <a href="{{ url('/register') }}" class="matrix-link">CRIAR_PERFIL</a>
+            </div>
+
+            <div class="cyber-success" id="successMessage">
+                <div class="success-matrix">
+                    <div class="matrix-rings">
+                        <div class="success-ring ring-1"></div>
+                        <div class="success-ring ring-2"></div>
+                        <div class="success-ring ring-3"></div>
+                    </div>
+                    <div class="success-core">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <path d="M10 16l6 6 12-12" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </div>
+                <h3 class="success-title">[ CONNECTION_ESTABLISHED ]</h3>
+                <p class="success-desc">Accessing neural interface...</p>
             </div>
         </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gradient-to-b from-slate-900 to-slate-950 border-t-2 border-orange-500 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="text-center text-gray-400">
-                <p class="mb-2">&copy; 2024 Manga Livre - Todos os direitos reservados</p>
-                <p>Uma plataforma dedicada aos amantes de mangás</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Form submission
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Add animation to button
-            const button = this.querySelector('button[type="submit"]');
-            button.style.opacity = '0.7';
-            
-            setTimeout(() => {
-                button.style.opacity = '1';
-                // Aqui você faria a requisição real para o servidor
-                console.log('Login realizado!');
-            }, 500);
-        });
-
-        // Input animation
-        document.querySelectorAll('input[type="email"], input[type="password"]').forEach(input => {
-            input.addEventListener('focus', function() {
-                this.closest('div').classList.add('scale-105');
-            });
-            
-            input.addEventListener('blur', function() {
-                this.closest('div').classList.remove('scale-105');
-            });
-        });
-    </script>
-</body>
-</html>
+    </div>
+</div>
+{% endblock %}

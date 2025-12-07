@@ -6,14 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
     <link rel="stylesheet" href="templatemo-graph-page.css">
+    {% block head %}
+    {% endblock %}
 </head>
 
 <body>
-    {% include('app/topo.html') %}
-    {% block content%}
+    <div>
+        {% include('app/topo.html') %}
+        {% block content%}
+        {% endblock %}
+        {% include('app/rodape.html') %}
+    </div>
+    {% block script %}
     {% endblock %}
-    {% include('app/rodape.html') %}
-    <script src="templatemo-graph-script.js"></script>
 </body>
 
 </html>

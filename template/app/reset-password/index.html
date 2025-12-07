@@ -1,0 +1,108 @@
+{% extends 'app/base.html' %}
+{% block head %}
+<script src="assets/js/reset-password.js"></script>
+{% endblock %}
+{% block content%}
+<div class="cyber-grid">
+    <div class="grid-line grid-h-1"></div>
+    <div class="grid-line grid-v-1"></div>
+    <div class="grid-line grid-h-2"></div>
+    <div class="grid-line grid-v-2"></div>
+    <div class="grid-line grid-h-3"></div>
+    <div class="cyber-glitch glitch-1"></div>
+    <div class="cyber-glitch glitch-2"></div>
+</div>
+
+<div class="login-container">
+    <div class="cyber-terminal">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <div class="term-btn btn-red"></div>
+                <div class="term-btn btn-yellow"></div>
+                <div class="term-btn btn-green"></div>
+            </div>
+            <div class="terminal-title">RESET_PASSWORD_INTERFACE.exe</div>
+        </div>
+
+        <div class="cyber-content">
+            <div class="neon-header">
+                <div class="cyber-logo">
+                    <div class="logo-frame">
+                        <div class="logo-core">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                                <path d="M20 4L36 12v16L20 36L4 28V12L20 4z" stroke="currentColor" stroke-width="2"
+                                    fill="none" />
+                                <circle cx="20" cy="20" r="6" stroke="currentColor" stroke-width="1.5" />
+                                <path d="M14 14l12 12M26 14l-12 12" stroke="currentColor" stroke-width="1" />
+                            </svg>
+                        </div>
+                        <div class="logo-scanner"></div>
+                    </div>
+                    <div class="neon-glow"></div>
+                </div>
+                <h1 class="cyber-title">
+                    <span class="title-glitch" data-text="CYPHER_NET">REDEFINA SUA SENHA</span>
+                </h1>
+                <p class="access-text">[ RECUPERAÇÂO DE ACESSO ]</p>
+            </div>
+
+            <form class="neon-form" id="loginForm" novalidate>
+                <div class="cyber-field">
+                    <div class="field-frame">
+                        <div class="field-border"></div>
+                        <input type="email" id="email" name="email" required autocomplete="email">
+                        <label for="email">&gt; ENDEREÇO_DE_EMAIL</label>
+                        <div class="cyber-scanner">
+                            <div class="scan-line"></div>
+                        </div>
+                    </div>
+                    <span class="cyber-error" id="emailError"></span>
+                </div>
+
+                <button type="submit" class="neon-button">
+                    <div class="btn-matrix"></div>
+                    <span class="btn-text">[ RECUPERAR_ACESSO ]</span>
+                    <div class="btn-loader">
+                        <div class="matrix-loader">
+                            <div class="matrix-bar"></div>
+                            <div class="matrix-bar"></div>
+                            <div class="matrix-bar"></div>
+                            <div class="matrix-bar"></div>
+                        </div>
+                    </div>
+                    <div class="btn-glow"></div>
+                </button>
+            </form>
+
+            <div class="cyber-divider">
+                <div class="divider-grid"></div>
+                <span class="divider-text">[ PROTOCOLOS_ALTERNATIVOS ]</span>
+                <div class="divider-grid"></div>
+            </div>
+
+            <div class="matrix-signup">
+                <span class="signup-prefix">[ NÃO_TEM_CONTA? ]</span>
+                <a href="{{ url('/register') }}" class="matrix-link">CRIAR_PERFIL</a>
+            </div>
+
+            <div class="cyber-success" id="successMessage">
+                <div class="success-matrix">
+                    <div class="matrix-rings">
+                        <div class="success-ring ring-1"></div>
+                        <div class="success-ring ring-2"></div>
+                        <div class="success-ring ring-3"></div>
+                    </div>
+                    <div class="success-core">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <path d="M10 16l6 6 12-12" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </div>
+                <h3 class="success-title">[ CONEXÃO_ESTABELECIDA ]</h3>
+                <p class="success-desc">Email de recuperação de acesso enviado...</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
