@@ -1,0 +1,9 @@
+#!/usr/bin/env php
+<?php
+
+$command = $argv[1] ?? null;
+
+match ($command) {
+    'routes:cache' => require __DIR__ . '/routes-cache.php',
+    default => exit("Comando inválido\n"),
+};
