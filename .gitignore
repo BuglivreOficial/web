@@ -5,5 +5,5 @@
 .env
 .env.*
 
-# Logs gerados em tempo de execução
-/storage/logs/
+# Dados de runtime (logs, cache, perfis de navegador locais, etc.)
+/storage/

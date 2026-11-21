@@ -1,0 +1,148 @@
+{% extends 'admin/partials/base.html' %}
+
+{% block title %}Categorias{% endblock %}
+{% block page_title %}Categorias{% endblock %}
+{% block page_subtitle %}Organize o catálogo por categorias.{% endblock %}
+
+{% block content %}
+<div class="progress" id="pageProgress" aria-hidden="true"><span class="progress__bar"></span></div>
+
+<div class="alert alert--error" id="pageAlert" role="alert"></div>
+<div class="alert alert--success" id="pageSuccess" role="alert"></div>
+
+<section class="card">
+    <header class="card__head">
+        <h2>Categorias ({{ categories|length }})</h2>
+        <button class="btn btn--primary" type="button" id="categoryNew">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            <span>Nova categoria</span>
+        </button>
+    </header>
+
+    <div class="table-wrap">
+    <table class="table" id="categoryTable">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Slug</th>
+                <th>Descrição</th>
+                <th>Status</th>
+                <th class="table__actions-col">Ações</th>
+            </tr>
+        </thead>
+        <tbody id="categoryBody">
+            {% for category in categories %}
+            <tr data-id="{{ category.id }}"
+                data-name="{{ category.name }}"
+                data-slug="{{ category.slug }}"
+                data-description="{{ category.description }}"
+                data-status="{{ category.status }}">
+                <td><strong data-field="name">{{ category.name }}</strong></td>
+                <td><code class="code" data-field="slug">{{ category.slug }}</code></td>
+                <td class="muted" data-field="description">{{ category.description ?: '—' }}</td>
+                <td data-field="status">
+                    {% if category.status %}
+                        <span class="badge badge--success">Ativa</span>
+                    {% else %}
+                        <span class="badge badge--danger">Inativa</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="table__actions">
+                        <button class="icon-btn icon-btn--sm" type="button" data-action="edit" aria-label="Editar categoria">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+                        </button>
+                        <button class="icon-btn icon-btn--sm is-danger" type="button" data-action="delete" aria-label="Excluir categoria">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            {% else %}
+            <tr class="table__empty">
+                <td colspan="5">Nenhuma categoria cadastrada. Clique em "Nova categoria" para começar.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</section>
+
+<template id="categoryRowTemplate">
+    <tr>
+        <td><strong data-field="name"></strong></td>
+        <td><code class="code" data-field="slug"></code></td>
+        <td class="muted" data-field="description"></td>
+        <td data-field="status"></td>
+        <td>
+            <div class="table__actions">
+                <button class="icon-btn icon-btn--sm" type="button" data-action="edit" aria-label="Editar categoria">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+                </button>
+                <button class="icon-btn icon-btn--sm is-danger" type="button" data-action="delete" aria-label="Excluir categoria">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+                </button>
+            </div>
+        </td>
+    </tr>
+</template>
+
+<div class="modal" id="categoryModal" aria-hidden="true">
+    <div class="modal__backdrop" data-close></div>
+
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="categoryModalTitle">
+        <header class="modal__head">
+            <h2 id="categoryModalTitle">Nova categoria</h2>
+            <button class="icon-btn icon-btn--sm" type="button" data-close aria-label="Fechar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
+        </header>
+
+        <form class="modal__body" id="categoryForm" novalidate>
+            <input type="hidden" name="id">
+
+            <div class="alert alert--error" id="categoryFormAlert" role="alert"></div>
+
+            <label class="field">
+                <span class="field__label">Nome</span>
+                <span class="field__control">
+                    <input type="text" name="name" placeholder="Ex.: Ação" autocomplete="off" data-rules="required|min:3" required>
+                </span>
+                <span class="field__error" aria-live="polite"></span>
+            </label>
+
+            <label class="field">
+                <span class="field__label">Slug</span>
+                <span class="field__control">
+                    <input type="text" name="slug" placeholder="gerado a partir do nome" autocomplete="off">
+                </span>
+                <span class="field__hint">Deixe em branco para gerar automaticamente a partir do nome.</span>
+                <span class="field__error" aria-live="polite"></span>
+            </label>
+
+            <label class="field">
+                <span class="field__label">Descrição</span>
+                <span class="field__control field__control--area">
+                    <textarea name="description" rows="3" placeholder="Breve descrição (opcional)"></textarea>
+                </span>
+                <span class="field__error" aria-live="polite"></span>
+            </label>
+
+            <div class="field">
+                <span class="field__label">Status</span>
+                <label class="check">
+                    <input type="checkbox" name="status" value="1" checked>
+                    <span>Categoria ativa</span>
+                </label>
+            </div>
+
+            <footer class="modal__foot">
+                <button class="btn btn--ghost" type="button" data-close>Cancelar</button>
+                <button class="btn btn--primary" type="submit">
+                    <span class="btn__label">Salvar categoria</span>
+                </button>
+            </footer>
+        </form>
+    </div>
+</div>
+{% endblock %}
