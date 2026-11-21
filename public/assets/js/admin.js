@@ -244,6 +244,299 @@
         });
     }
 
+    /* ---------- Categorias (CRUD via API, sem recarregar a grade) ---------- */
+    var categoryTable = document.getElementById('categoryTable');
+
+    if (categoryTable) {
+        var CATEGORY_API = '/api/categories';
+
+        var categoryModal = document.getElementById('categoryModal');
+        var categoryForm = document.getElementById('categoryForm');
+        var categoryBody = document.getElementById('categoryBody');
+        var categoryAlert = document.getElementById('categoryFormAlert');
+        var categoryTitle = document.getElementById('categoryModalTitle');
+        var categoryNew = document.getElementById('categoryNew');
+        var categoryProgress = document.getElementById('pageProgress');
+        var pageAlert = document.getElementById('pageAlert');
+        var pageSuccess = document.getElementById('pageSuccess');
+
+        var idField = categoryForm.querySelector('[name="id"]');
+        var nameField = categoryForm.querySelector('[name="name"]');
+        var slugField = categoryForm.querySelector('[name="slug"]');
+        var descriptionField = categoryForm.querySelector('[name="description"]');
+        var statusField = categoryForm.querySelector('[name="status"]');
+        var categorySubmit = categoryForm.querySelector('button[type="submit"]');
+
+        var alertTimer = null;
+
+        function slugify(text) {
+            return String(text)
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
+
+        function setCategoryBusy(loading) {
+            if (categoryProgress) categoryProgress.classList.toggle('is-active', loading);
+
+            if (categorySubmit) {
+                categorySubmit.disabled = loading;
+                categorySubmit.classList.toggle('is-loading', loading);
+            }
+
+            categoryForm.querySelectorAll('input, textarea, button[type="button"]').forEach(function (el) {
+                el.disabled = loading;
+            });
+        }
+
+        function showFormError(message) {
+            if (!categoryAlert) return;
+            categoryAlert.textContent = message;
+            categoryAlert.classList.add('is-visible');
+        }
+
+        function hideFormError() {
+            if (categoryAlert) categoryAlert.classList.remove('is-visible');
+
+            categoryForm.querySelectorAll('.field--invalid').forEach(function (field) {
+                field.classList.remove('field--invalid');
+            });
+            categoryForm.querySelectorAll('.field__error').forEach(function (box) {
+                box.textContent = '';
+            });
+        }
+
+        function flash(element, message, timeout) {
+            if (!element) return;
+
+            if (alertTimer) clearTimeout(alertTimer);
+            if (pageAlert) pageAlert.classList.remove('is-visible');
+            if (pageSuccess) pageSuccess.classList.remove('is-visible');
+
+            element.textContent = message;
+            element.classList.add('is-visible');
+
+            if (timeout) {
+                alertTimer = setTimeout(function () {
+                    element.classList.remove('is-visible');
+                }, timeout);
+            }
+        }
+
+        function openModal(category) {
+            categoryForm.reset();
+            hideFormError();
+
+            if (category) {
+                categoryTitle.textContent = 'Editar categoria';
+                idField.value = category.id;
+                nameField.value = category.name;
+                slugField.value = category.slug;
+                slugField.dataset.manual = '1';
+                descriptionField.value = category.description || '';
+                statusField.checked = String(category.status) === '1';
+            } else {
+                categoryTitle.textContent = 'Nova categoria';
+                idField.value = '';
+                delete slugField.dataset.manual;
+                statusField.checked = true;
+            }
+
+            categoryModal.classList.add('is-open');
+            categoryModal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('no-scroll');
+
+            setTimeout(function () { nameField.focus(); }, 60);
+        }
+
+        function closeModal() {
+            categoryModal.classList.remove('is-open');
+            categoryModal.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('no-scroll');
+        }
+
+        function readRow(row) {
+            return {
+                id: row.dataset.id,
+                name: row.dataset.name,
+                slug: row.dataset.slug,
+                description: row.dataset.description,
+                status: row.dataset.status
+            };
+        }
+
+        function applyRow(row, category) {
+            row.dataset.id = category.id;
+            row.dataset.name = category.name;
+            row.dataset.slug = category.slug;
+            row.dataset.description = category.description || '';
+            row.dataset.status = category.status;
+
+            row.querySelector('[data-field="name"]').textContent = category.name;
+            row.querySelector('[data-field="slug"]').textContent = category.slug;
+            row.querySelector('[data-field="description"]').textContent = category.description || '—';
+            row.querySelector('[data-field="status"]').innerHTML = Number(category.status) === 1
+                ? '<span class="badge badge--success">Ativa</span>'
+                : '<span class="badge badge--danger">Inativa</span>';
+        }
+
+        function makeRow(category) {
+            var template = document.getElementById('categoryRowTemplate');
+            var row = template.content.firstElementChild.cloneNode(true);
+            applyRow(row, category);
+
+            return row;
+        }
+
+        function ensureEmptyState() {
+            if (categoryBody.querySelector('tr[data-id]') || categoryBody.querySelector('.table__empty')) return;
+
+            var row = document.createElement('tr');
+            row.className = 'table__empty';
+            row.innerHTML = '<td colspan="5">Nenhuma categoria cadastrada. Clique em "Nova categoria" para começar.</td>';
+            categoryBody.appendChild(row);
+        }
+
+        function findRow(id) {
+            return categoryBody.querySelector('tr[data-id="' + id + '"]');
+        }
+
+        function handleUnauthorized(status) {
+            if (status !== 401) return false;
+
+            window.location.href = '/admin/auth';
+            return true;
+        }
+
+        if (categoryNew) {
+            categoryNew.addEventListener('click', function () { openModal(null); });
+        }
+
+        categoryModal.querySelectorAll('[data-close]').forEach(function (el) {
+            el.addEventListener('click', closeModal);
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && categoryModal.classList.contains('is-open')) closeModal();
+        });
+
+        // Slug gerado automaticamente a partir do nome até ser editado manualmente.
+        nameField.addEventListener('input', function () {
+            if (slugField.dataset.manual) return;
+            slugField.value = slugify(nameField.value);
+        });
+
+        slugField.addEventListener('input', function () {
+            slugField.dataset.manual = '1';
+        });
+
+        categoryForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            hideFormError();
+
+            if (!validateForm(categoryForm)) return;
+
+            var id = idField.value;
+            var payload = {
+                name: nameField.value.trim(),
+                slug: slugField.value.trim(),
+                description: descriptionField.value.trim(),
+                status: statusField.checked ? 1 : 0
+            };
+
+            setCategoryBusy(true);
+
+            fetch(id ? CATEGORY_API + '/' + id : CATEGORY_API, {
+                method: id ? 'PUT' : 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+                .then(function (res) {
+                    return res.json().then(function (data) {
+                        return { status: res.status, ok: res.ok, data: data };
+                    });
+                })
+                .then(function (result) {
+                    setCategoryBusy(false);
+
+                    if (handleUnauthorized(result.status)) return;
+
+                    var data = result.data || {};
+
+                    if (!result.ok) {
+                        showFormError(data.message || 'Não foi possível salvar a categoria.');
+                        return;
+                    }
+
+                    var row = id ? findRow(id) : null;
+
+                    if (row) {
+                        applyRow(row, data.category);
+                    } else {
+                        var empty = categoryBody.querySelector('.table__empty');
+                        if (empty) empty.remove();
+                        categoryBody.appendChild(makeRow(data.category));
+                    }
+
+                    closeModal();
+                    flash(pageSuccess, data.message || 'Categoria salva com sucesso.', 4000);
+                })
+                .catch(function () {
+                    setCategoryBusy(false);
+                    showFormError('Falha de conexão. Tente novamente em instantes.');
+                });
+        });
+
+        categoryBody.addEventListener('click', function (e) {
+            var button = e.target.closest ? e.target.closest('[data-action]') : null;
+            if (!button) return;
+
+            var row = button.closest('tr');
+            if (!row) return;
+
+            var category = readRow(row);
+
+            if (button.dataset.action === 'edit') {
+                openModal(category);
+                return;
+            }
+
+            if (button.dataset.action === 'delete') {
+                if (!window.confirm('Remover a categoria "' + category.name + '"? Esta ação não pode ser desfeita.')) return;
+
+                row.classList.add('is-busy');
+
+                fetch(CATEGORY_API + '/' + category.id, {
+                    method: 'DELETE',
+                    headers: { 'Accept': 'application/json' }
+                })
+                    .then(function (res) {
+                        return res.json().then(function (data) {
+                            return { status: res.status, ok: res.ok, data: data };
+                        });
+                    })
+                    .then(function (result) {
+                        if (handleUnauthorized(result.status)) return;
+
+                        if (!result.ok) {
+                            row.classList.remove('is-busy');
+                            flash(pageAlert, (result.data && result.data.message) || 'Não foi possível remover a categoria.');
+                            return;
+                        }
+
+                        row.remove();
+                        ensureEmptyState();
+                        flash(pageSuccess, (result.data && result.data.message) || 'Categoria removida com sucesso.', 4000);
+                    })
+                    .catch(function () {
+                        row.classList.remove('is-busy');
+                        flash(pageAlert, 'Falha de conexão. Tente novamente em instantes.');
+                    });
+            }
+        });
+    }
+
     /* ---------- Ano dinâmico ---------- */
     document.querySelectorAll('#year').forEach(function (el) {
         el.textContent = new Date().getFullYear();
