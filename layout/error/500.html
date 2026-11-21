@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>500 · Erro interno</title>
+    <style>
+        :root { color-scheme: dark; }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            font-family: "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+            color: #e7e9f1;
+            background: radial-gradient(900px 480px at 12% -8%, rgba(239, 68, 68, .16), transparent 60%), #0e1016;
+        }
+        .box { max-width: 520px; text-align: center; }
+        .code { font-size: 74px; font-weight: 800; line-height: 1; background: linear-gradient(135deg, #ef4444, #ff5c8a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        h1 { font-size: 22px; margin: 14px 0 6px; }
+        p { color: #98a0b6; margin: 0 0 24px; }
+        a {
+            display: inline-block;
+            padding: 11px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            color: #fff;
+            background: #7c5cff;
+        }
+        a:hover { background: #6a49f2; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="code">500</div>
+        <h1>Erro interno do servidor</h1>
+        <p>{{ message|default('Algo deu errado ao processar sua solicitação. A equipe já foi notificada.') }}</p>
+        <a href="/admin">Voltar ao painel</a>
+    </div>
+</body>
+</html>

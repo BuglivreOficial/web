@@ -1,0 +1,143 @@
+{% extends 'admin/partials/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block page_subtitle %}Resumo geral do catálogo e da comunidade.{% endblock %}
+
+{% block content %}
+<div class="grid grid--stats">
+    <article class="stat-card">
+        <span class="stat-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </span>
+        <div class="stat-card__body">
+            <span class="stat-card__label">Mangás publicados</span>
+            <strong class="stat-card__value">128</strong>
+            <span class="stat-card__trend is-up">+6 este mês</span>
+        </div>
+    </article>
+
+    <article class="stat-card">
+        <span class="stat-card__icon stat-card__icon--accent">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
+        </span>
+        <div class="stat-card__body">
+            <span class="stat-card__label">Capítulos</span>
+            <strong class="stat-card__value">2.486</strong>
+            <span class="stat-card__trend is-up">+38 esta semana</span>
+        </div>
+    </article>
+
+    <article class="stat-card">
+        <span class="stat-card__icon stat-card__icon--success">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2 21a7 7 0 0 1 14 0"/><path d="M17 4.5a3.5 3.5 0 0 1 0 7"/><path d="M19 21a6 6 0 0 0-3-5.2"/></svg>
+        </span>
+        <div class="stat-card__body">
+            <span class="stat-card__label">Usuários</span>
+            <strong class="stat-card__value">9.842</strong>
+            <span class="stat-card__trend is-up">+214 este mês</span>
+        </div>
+    </article>
+
+    <article class="stat-card">
+        <span class="stat-card__icon stat-card__icon--warning">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5z"/></svg>
+        </span>
+        <div class="stat-card__body">
+            <span class="stat-card__label">Comentários</span>
+            <strong class="stat-card__value">12</strong>
+            <span class="stat-card__trend is-down">Aguardando moderação</span>
+        </div>
+    </article>
+</div>
+
+<div class="grid grid--cols">
+    <section class="card">
+        <header class="card__head">
+            <h2>Lançamentos recentes</h2>
+            <a class="btn btn--ghost btn--sm" href="/admin/capitulos">Ver todos</a>
+        </header>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Mangá</th>
+                    <th>Capítulo</th>
+                    <th>Status</th>
+                    <th>Publicado em</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Sombras de Aço</td>
+                    <td>#142</td>
+                    <td><span class="badge badge--success">Publicado</span></td>
+                    <td class="muted">Hoje, 09:12</td>
+                </tr>
+                <tr>
+                    <td>A Última Jornada</td>
+                    <td>#87</td>
+                    <td><span class="badge badge--success">Publicado</span></td>
+                    <td class="muted">Hoje, 07:40</td>
+                </tr>
+                <tr>
+                    <td>Neon Kyoto</td>
+                    <td>#23</td>
+                    <td><span class="badge badge--warning">Em revisão</span></td>
+                    <td class="muted">Ontem, 22:05</td>
+                </tr>
+                <tr>
+                    <td>Coração de Papel</td>
+                    <td>#58</td>
+                    <td><span class="badge badge--primary">Agendado</span></td>
+                    <td class="muted">Ontem, 18:30</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <aside class="card">
+        <header class="card__head">
+            <h2>Atividade recente</h2>
+        </header>
+
+        <ul class="activity">
+            <li>
+                <span class="activity__dot"></span>
+                <div>
+                    <p class="activity__text">Novo capítulo enviado em <strong>Sombras de Aço</strong>.</p>
+                    <span class="activity__time">há 12 minutos</span>
+                </div>
+            </li>
+            <li>
+                <span class="activity__dot" style="background: var(--success)"></span>
+                <div>
+                    <p class="activity__text">Comentário aprovado por <strong>moderador</strong>.</p>
+                    <span class="activity__time">há 1 hora</span>
+                </div>
+            </li>
+            <li>
+                <span class="activity__dot" style="background: var(--accent)"></span>
+                <div>
+                    <p class="activity__text">Novo gênero <strong>Isekai</strong> cadastrado.</p>
+                    <span class="activity__time">há 3 horas</span>
+                </div>
+            </li>
+            <li>
+                <span class="activity__dot" style="background: var(--warning)"></span>
+                <div>
+                    <p class="activity__text">Backup automático concluído.</p>
+                    <span class="activity__time">hoje, 04:00</span>
+                </div>
+            </li>
+            <li>
+                <span class="activity__dot"></span>
+                <div>
+                    <p class="activity__text">Nova conta de colaborador criada.</p>
+                    <span class="activity__time">ontem, 20:14</span>
+                </div>
+            </li>
+        </ul>
+    </aside>
+</div>
+{% endblock %}

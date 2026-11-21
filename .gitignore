@@ -1,0 +1,9 @@
+# Dependências instaladas pelo Composer
+/vendor/
+
+# Variáveis de ambiente (contêm credenciais e segredos)
+.env
+.env.*
+
+# Logs gerados em tempo de execução
+/storage/logs/
